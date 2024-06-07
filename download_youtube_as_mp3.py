@@ -35,8 +35,8 @@ def download_youtube_as_mp3(youtube_url, output_path, audio_quality='48k', start
         print(f"Error occurred: {e}")
 
 # Define the YouTube URL and output file path
-youtube_url = 'https://www.youtube.com/watch?v=YOUR_VIDEO_ID'
-output_path = '/workspaces/youtube-downloader/output.mp3'
+youtube_url = 'https://www.youtube.com/watch?'
+output_path = '/workspaces/youtube-downloader/%(title)s.%(ext)s'
 
 # Define start and end times for clipping
 # start_time = '00:00:10'  # Start at 10 seconds
