@@ -1,6 +1,6 @@
 import subprocess
 
-def download_youtube_as_mp3(youtube_url, output_path, audio_quality='48k', start_time=None, end_time=None):
+def download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k', start_time=None, end_time=None):
     """
     Download a YouTube video as an MP3 file with specified audio quality and time segment.
 
@@ -16,34 +16,38 @@ def download_youtube_as_mp3(youtube_url, output_path, audio_quality='48k', start
         'yt-dlp',
         '-x', '--audio-format', 'mp3',
         '--audio-quality', audio_quality,
-        '-o', output_path
+        '-o', output_path_template
     ]
     
     # Add start time and end time if specified
-    if start_time:
-        command.extend(['--postprocessor-args', f"-ss {start_time}"])
-    if end_time:
-        command.extend(['--postprocessor-args', f"-to {end_time}"])
+    if start_time or end_time:
+        postprocessor_args = []
+        if start_time:
+            postprocessor_args.append(f"-ss {start_time}")
+        if end_time:
+            postprocessor_args.append(f"-to {end_time}")
+        command.extend(['--postprocessor-args', ' '.join(postprocessor_args)])
+
 
     command.append(youtube_url)
 
     # Run the yt-dlp command
     try:
         subprocess.run(command, check=True)
-        print(f"File downloaded and saved as {output_path}")
+        print(f"File downloaded and saved as {output_path_template}")
     except subprocess.CalledProcessError as e:
         print(f"Error occurred: {e}")
 
 # Define the YouTube URL and output file path
 youtube_url = 'https://www.youtube.com/watch?'
-output_path = '/workspaces/youtube-downloader/%(title)s.%(ext)s'
+output_path_template = '/workspaces/youtube-downloader/%(title)s.%(ext)s'
 
 # Define start and end times for clipping
-# start_time = '00:00:10'  # Start at 10 seconds
-# end_time = '00:00:30'    # End at 30 seconds
+start_time = '00:03:48'  # Start at 10 seconds
+end_time = '00:40:54'    # End at 30 seconds
 
 # Download the YouTube video as an MP3 file with specified audio quality and time segment
-# download_youtube_as_mp3(youtube_url, output_path, audio_quality='48k', start_time=start_time, end_time=end_time)
+download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k', start_time=start_time, end_time=end_time)
 
 # Download the entire YouTube video as an MP3 file with specified audio quality
-download_youtube_as_mp3(youtube_url, output_path, audio_quality='48k')
+#download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k')
