@@ -43,11 +43,11 @@ youtube_url = 'https://www.youtube.com/watch?'
 output_path_template = '/workspaces/youtube-downloader/%(title)s.%(ext)s'
 
 # Define start and end times for clipping
-start_time = '00:03:48'  # Start at 10 seconds
-end_time = '00:40:54'    # End at 30 seconds
+#start_time = '00:03:48'  # Start at 10 seconds
+#end_time = '00:40:54'    # End at 30 seconds
 
 # Download the YouTube video as an MP3 file with specified audio quality and time segment
-download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k', start_time=start_time, end_time=end_time)
+#download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k', start_time=start_time, end_time=end_time)
 
 # Download the entire YouTube video as an MP3 file with specified audio quality
-#download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k')
+download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k')
