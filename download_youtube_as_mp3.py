@@ -1,15 +1,16 @@
 import subprocess
 
-def download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k', start_time=None, end_time=None):
+def download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k', cookies_file=None, start_time=None, end_time=None):
     """
     Download a YouTube video as an MP3 file with specified audio quality and time segment.
 
     Args:
     youtube_url (str): URL of the YouTube video.
-    output_path (str): Path to save the downloaded MP3 file.
+    output_path_template (str): Template path to save the downloaded MP3 file, using yt-dlp placeholders.
     audio_quality (str): Audio quality for the MP3 file (e.g., '48k', '128k').
-    start_time (str): Start time for clipping (e.g., '00:00:10' for 10 seconds).
-    end_time (str): End time for clipping (e.g., '00:00:20' for 20 seconds).
+    cookies_file (str): Path to the cookies file for authentication.
+    start_time (str): Start time for clipping (e.g., '00:03:25' for 3 minutes and 25 seconds).
+    end_time (str): End time for clipping (e.g., '00:35:40' for 35 minutes and 40 seconds).
     """
     # Construct the yt-dlp command
     command = [
@@ -19,6 +20,10 @@ def download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48
         '-o', output_path_template
     ]
     
+    # Add cookies file if specified
+    if cookies_file:
+        command.extend(['--cookies', cookies_file])
+    
     # Add start time and end time if specified
     if start_time or end_time:
         postprocessor_args = []
@@ -27,7 +32,6 @@ def download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48
         if end_time:
             postprocessor_args.append(f"-to {end_time}")
         command.extend(['--postprocessor-args', ' '.join(postprocessor_args)])
-
 
     command.append(youtube_url)
 
@@ -42,12 +46,15 @@ def download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48
 youtube_url = 'https://www.youtube.com/watch?'
 output_path_template = '/workspaces/youtube-downloader/%(title)s.%(ext)s'
 
+# Define the path to your cookies file
+cookies_file = '/workspaces/youtube-downloader/youtube_cookies.txt'
+
 # Define start and end times for clipping
-#start_time = '00:03:48'  # Start at 10 seconds
-#end_time = '00:40:54'    # End at 30 seconds
+#start_time = '00:03:25'  # Start at 3 minutes and 25 seconds
+#end_time = '00:35:40'    # End at 35 minutes and 40 seconds
 
 # Download the YouTube video as an MP3 file with specified audio quality and time segment
-#download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k', start_time=start_time, end_time=end_time)
+#download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k', cookies_file=cookies_file, start_time=start_time, end_time=end_time)
 
 # Download the entire YouTube video as an MP3 file with specified audio quality
-download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k')
+download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k', cookies_file=cookies_file)
