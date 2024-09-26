@@ -1,13 +1,13 @@
 import subprocess
 
-def download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k', cookies_file=None, start_time=None, end_time=None):
+def download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='44k', cookies_file=None, start_time=None, end_time=None):
     """
     Download a YouTube video as an MP3 file with specified audio quality and time segment.
 
     Args:
     youtube_url (str): URL of the YouTube video.
     output_path_template (str): Template path to save the downloaded MP3 file, using yt-dlp placeholders.
-    audio_quality (str): Audio quality for the MP3 file (e.g., '48k', '128k').
+    audio_quality (str): Audio quality for the MP3 file (e.g., '44k', '128k').
     cookies_file (str): Path to the cookies file for authentication.
     start_time (str): Start time for clipping (e.g., '00:03:25' for 3 minutes and 25 seconds).
     end_time (str): End time for clipping (e.g., '00:35:40' for 35 minutes and 40 seconds).
@@ -52,7 +52,7 @@ start_time = '00:03:25'  # Start at 3 minutes and 25 seconds
 end_time = '00:35:40'    # End at 35 minutes and 40 seconds
 
 # Download the YouTube video as an MP3 file with specified audio quality and time segment
-download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k', cookies_file=cookies_file, start_time=start_time, end_time=end_time)
+download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='44k', cookies_file=cookies_file, start_time=start_time, end_time=end_time)
 
 # Download the entire YouTube video as an MP3 file with specified audio quality
-# download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='48k', cookies_file=cookies_file)
+# download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='44k', cookies_file=cookies_file)
