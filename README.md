@@ -20,3 +20,6 @@ Audio Quality: The audio quality is set to 48 kbps by default. You can change th
 
 
 Uncomment appropriate part of script to specify start and end time
+
+Combine MP3
+- Ensure you have ffmpeg and pydub installed
