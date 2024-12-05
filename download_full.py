@@ -33,6 +33,9 @@ def download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='44
             postprocessor_args.append(f"-to {end_time}")
         command.extend(['--postprocessor-args', ' '.join(postprocessor_args)])
 
+    # Add User-Agent for better compatibility
+    command.extend(['--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'])
+
     command.append(youtube_url)
 
     # Run the yt-dlp command
@@ -43,7 +46,7 @@ def download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='44
         print(f"Error occurred: {e}")
 
 # Define the YouTube URL and output file path
-youtube_url = 'https://www.youtube.com/watch?'
+youtube_url = 'https://www.youtube.com/watch?v'
 output_path_template = '/workspaces/youtube-downloader/%(title)s.%(ext)s'
 
 # Define the path to your cookies file

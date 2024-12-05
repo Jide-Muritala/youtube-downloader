@@ -5,6 +5,9 @@ Ensure you have yt-dlp and FFmpeg installed (you can verify that both tools are 
 - `sudo apt install -y python3-pip ffmpeg`
 - `pip3 install yt-dlp`
 
+Updating yt-dlp may sometime solve issues
+- `pip install -U yt-dlp`
+
 
 Specify Youtube URL and output file:
 - youtube_url: Replace 'https://www.youtube.com/watch?v=YOUR_VIDEO_ID' with the actual URL of the YouTube video you want to download.
