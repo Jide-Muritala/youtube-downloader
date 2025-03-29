@@ -5,8 +5,10 @@ Ensure you have yt-dlp and FFmpeg installed (you can verify that both tools are 
 - `sudo apt install -y python3-pip ffmpeg`
 - `pip3 install yt-dlp`
 
-Updating yt-dlp may sometime solve issues
+Updating yt-dlp may sometime solve issues:
 - `pip install -U yt-dlp`
+Or Updating ffmpeg:
+- `sudo apt update && sudo apt upgrade ffmpeg -y`
 
 
 Specify Youtube URL and output file:
