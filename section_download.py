@@ -71,7 +71,7 @@ def trim_audio(input_file, output_file, start_time, end_time):
 # --- Main script execution ---
 
 # Define variables
-youtube_url = 'https://www.youtube.com/watch?v=l38hu117Fbo'
+youtube_url = 'https://www.youtube.com/watch?'
 download_dir = '/workspaces/youtube-downloader'
 # Use yt-dlp placeholder for title; the downloaded file will be named using the YouTube title.
 output_path_template = os.path.join(download_dir, '%(title)s.%(ext)s')
