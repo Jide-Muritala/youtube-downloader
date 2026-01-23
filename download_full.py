@@ -1,63 +1,56 @@
 import subprocess
 
-def download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='44k', cookies_file=None, start_time=None, end_time=None):
+def download_youtube_as_mp3(
+    youtube_url,
+    output_path_template,
+    audio_quality="0",
+    cookies_file=None,
+    start_time=None,
+    end_time=None
+):
     """
     Download a YouTube video as an MP3 file with specified audio quality and time segment.
 
     Args:
     youtube_url (str): URL of the YouTube video.
     output_path_template (str): Template path to save the downloaded MP3 file, using yt-dlp placeholders.
-    audio_quality (str): Audio quality for the MP3 file (e.g., '44k', '128k').
+    audio_quality (str): Audio quality for the MP3 file (e.g., '0' [Best], '5' [Medium], '9' [Lowest]).
     cookies_file (str): Path to the cookies file for authentication.
     start_time (str): Start time for clipping (e.g., '00:03:25' for 3 minutes and 25 seconds).
     end_time (str): End time for clipping (e.g., '00:35:40' for 35 minutes and 40 seconds).
     """
-    # Construct the yt-dlp command
     command = [
-        'yt-dlp',
-        '-x', '--audio-format', 'mp3',
-        '--audio-quality', audio_quality,
-        '-o', output_path_template
+        "yt-dlp",
+        "-f", "251", 
+        "--extract-audio",
+        "--audio-format", "mp3",
+        "--audio-quality", audio_quality,
+        "--js-runtimes", "node",
+        "--remote-components", "ejs:github",
+        "-o", output_path_template,
+        "--force-overwrites",
     ]
-    
-    # Add cookies file if specified
-    if cookies_file:
-        command.extend(['--cookies', cookies_file])
-    
-    # Add start time and end time if specified
-    if start_time or end_time:
-        postprocessor_args = []
-        if start_time:
-            postprocessor_args.append(f"-ss {start_time}")
-        if end_time:
-            postprocessor_args.append(f"-to {end_time}")
-        command.extend(['--postprocessor-args', ' '.join(postprocessor_args)])
 
-    # Add User-Agent for better compatibility
-    command.extend(['--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'])
+    if cookies_file:
+        command += ["--cookies", cookies_file]
+
+    if start_time or end_time:
+        ffmpeg_args = []
+        if start_time:
+            ffmpeg_args.append(f"-ss {start_time}")
+        if end_time:
+            ffmpeg_args.append(f"-to {end_time}")
+        command += ["--postprocessor-args", " ".join(ffmpeg_args)]
 
     command.append(youtube_url)
 
-    # Run the yt-dlp command
-    try:
-        subprocess.run(command, check=True)
-        print(f"File downloaded and saved as {output_path_template}")
-    except subprocess.CalledProcessError as e:
-        print(f"Error occurred: {e}")
+    subprocess.run(command, check=True)
 
-# Define the YouTube URL and output file path
-youtube_url = 'https://www.youtube.com/watch?v'
-output_path_template = '/workspaces/youtube-downloader/%(title)s.%(ext)s'
 
-# Define the path to your cookies file
-cookies_file = '/workspaces/youtube-downloader/cookies.txt'
-
-# Define start and end times for clipping
-#start_time = '00:03:25'  # Start at 3 minutes and 25 seconds
-#end_time = '00:35:40'    # End at 35 minutes and 40 seconds
-
-# Download the YouTube video as an MP3 file with specified audio quality and time segment
-#download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='44k', cookies_file=cookies_file, start_time=start_time, end_time=end_time)
-
-# Download the entire YouTube video as an MP3 file with specified audio quality
-download_youtube_as_mp3(youtube_url, output_path_template, audio_quality='44k', cookies_file=cookies_file)
+# Usage
+download_youtube_as_mp3(
+    youtube_url="https://www.youtube.com/watch?",
+    output_path_template="/workspaces/youtube-downloader/%(title)s.%(ext)s",
+    audio_quality="9",
+    cookies_file="cookies.txt"
+)
