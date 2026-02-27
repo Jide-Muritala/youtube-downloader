@@ -4,7 +4,7 @@ import os
 def download_audio_section(
     youtube_url,
     output_path_template,
-    audio_quality="0",
+    audio_quality="9",
     cookies_file=None,
     start_time=None,
     end_time=None
@@ -15,7 +15,7 @@ def download_audio_section(
 
     command = [
         "yt-dlp",
-        "-f", "91",                 
+        "-f", "140",
         "--extract-audio",
         "--audio-format", "mp3",
         "--audio-quality", audio_quality,
@@ -28,18 +28,16 @@ def download_audio_section(
     if cookies_file:
         command.extend(["--cookies", cookies_file])
 
-    # Trim during post-processing using ffmpeg
+    # ✅ CORRECT trimming method
     if start_time or end_time:
-        ffmpeg_args = []
+        section = "*"
         if start_time:
-            ffmpeg_args.append(f"-ss {start_time}")
+            section += start_time
+        section += "-"
         if end_time:
-            ffmpeg_args.append(f"-to {end_time}")
+            section += end_time
 
-        command.extend([
-            "--postprocessor-args",
-            " ".join(ffmpeg_args)
-        ])
+        command.extend(["--download-sections", section])
 
     command.append(youtube_url)
 
@@ -62,6 +60,6 @@ download_audio_section(
     output_path_template=output_path_template,
     audio_quality="9",
     cookies_file=cookies_file,
-    start_time="00:00:00",
-    end_time="00:29:22"
+    start_time="00:09:40",
+    end_time="00:30:40"
 )
