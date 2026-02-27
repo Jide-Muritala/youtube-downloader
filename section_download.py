@@ -50,7 +50,7 @@ download_dir = "/workspaces/youtube-downloader"
 
 output_path_template = os.path.join(
     download_dir,
-    "%(title)s_%(section_start)s-%(section_end)s.%(ext)s"
+    "%(title)s.%(ext)s"
 )
 
 cookies_file = os.path.join(download_dir, "cookies.txt")
