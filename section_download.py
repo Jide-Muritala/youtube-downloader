@@ -15,7 +15,7 @@ def download_audio_section(
 
     command = [
         "yt-dlp",
-        "-f", "140",
+        "-f", "ba[protocol=https]/ba",
         "--extract-audio",
         "--audio-format", "mp3",
         "--audio-quality", audio_quality,
